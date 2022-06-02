@@ -7,34 +7,34 @@ import { Dashboard } from '../screens/Dashboard';
 import { Repository } from '../screens/Repository';
 import { Header } from '../components/Header';
 
-const stackRoutes = createStackNavigator();
+export type RootStackParamList = {
+  Dashboard: undefined;
+  Repository: {
+    repositoryId: number;
+  };
+};
 
-const AppRoutes: React.FC = () => (
-  <stackRoutes.Navigator
-    screenOptions={{
-      cardStyle: {
-        backgroundColor: theme.colors.gray_50
-      },
-      header: ({ navigation }) => {
-        if (navigation.canGoBack()) {
-          return <Header goBack={navigation.goBack} />
-        }
-        return <Header />
-      },
-      headerTransparent: true
-    }}
-  >
-   <stackRoutes.Screen
-    name="Dashboard"
-    component={Dashboard}
-   />
+const { Navigator, Screen } = createStackNavigator();
 
-  <stackRoutes.Screen
-    name="Repository"
-    component={Repository}
-   /> 
+export function StackRoutes() {
+  return (
+    <Navigator
+      screenOptions={{
+        cardStyle: {
+          backgroundColor: theme.colors.gray_50,
+        },
+        header: ({ navigation }) => {
+          if (navigation.canGoBack()) {
+            return <Header goBack={navigation.goBack} />;
+          }
+          return <Header />;
+        },
+        headerTransparent: true,
+      }}
+    >
+      <Screen name="Dashboard" component={Dashboard} />
 
-  </stackRoutes.Navigator>
-)
-
-export default AppRoutes;
+      <Screen name="Repository" component={Repository} />
+    </Navigator>
+  );
+}
